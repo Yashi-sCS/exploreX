@@ -12,6 +12,7 @@ const App=()=>{
 
     const [coordinates, setCoordinates] = useState({});
     const [bounds, setBounds] = useState(null);
+    
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({ coords: {latitude,longitude}}) =>{
