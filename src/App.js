@@ -8,30 +8,43 @@ import List from "./components/List/List";
 import Map from "./components/Map/Map";
 
 const App=()=>{
-    const [places, setPlaces] = useState([ ]);
+    const [places, setPlaces] = useState([]);
 
-    const [ coordinates, setCoordinates] = useState({});
-    const [bounds, setBounds] = useEffect(null);
+    const [coordinates, setCoordinates] = useState({});
+    const [bounds, setBounds] = useState(null);
 
     useEffect(() => {
-     navigator.geolocation.getCurrentPosition(({ coords: {latitude,longitude}}) =>{
-         setCoordinates({lat:latitude, lng:longitude});
-     })
+        navigator.geolocation.getCurrentPosition(({ coords: {latitude,longitude}}) =>{
+            setCoordinates({lat:latitude, lng:longitude});
+        })
     }, []);
 
+    useEffect(() => {
+        if (coordinates.lat && coordinates.lng) {
+            setBounds({
+                sw: {
+                    lat: coordinates.lat - 0.1,
+                    lng: coordinates.lng - 0.1,
+                },
+                ne: {
+                    lat: coordinates.lat + 0.1,
+                    lng: coordinates.lng + 0.1,
+                },
+            });
+        }
+    }, [coordinates]);
 
     useEffect (() => {
-        console.log(coordinates, bounds);
-
-
-      getPlacesData(bounds.sw,bounds.ne)
-      .then( (data) => {
-          setPlaces(data);
-      })
-    }, [coordinates, bounds] );
-
-
-
+        if (bounds) {
+            getPlacesData(bounds.sw,bounds.ne)
+            .then((data) => {
+                setPlaces(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+    }, [bounds]);
 
     return(
         <>
@@ -44,9 +57,9 @@ const App=()=>{
                 </Grid>
                 <Grid item xs={12} md={8}>
                     <Map
-                    setCoordinates={setCoordinates}
-                    setBounds={setBounds}
-                    coordinates={coordinates}
+                        setCoordinates={setCoordinates}
+                        setBounds={setBounds}
+                        coordinates={coordinates}
                     />
                 </Grid>
 

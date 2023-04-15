@@ -27,6 +27,7 @@ const URL ='https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary'
     return data;
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return null;
     }
 }
