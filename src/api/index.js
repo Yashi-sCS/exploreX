@@ -18,7 +18,7 @@ const URL ='https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary'
                 tr_longitude: ne.lng,
             },
             headers: {
-              'X-RapidAPI-Key': 'ae2d36b64cmshfbea10d7436e0eep1bc842jsnb7a7060ef86b',
+              'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_API_KEY,
               'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
             }
           
@@ -38,7 +38,7 @@ export const getWeatherData = async (lat, lng) => {
         const { data } = await axios.get('https://weather1395.p.rapidapi.com/temperature', {
             params: {url: 'Casablanca'},
             headers: {
-              'X-RapidAPI-Key': 'ae2d36b64cmshfbea10d7436e0eep1bc842jsnb7a7060ef86b',
+              'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_API_KEY,
               'X-RapidAPI-Host': 'weather1395.p.rapidapi.com'
             }
         });
