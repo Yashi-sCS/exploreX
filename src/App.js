@@ -13,6 +13,8 @@ const App=()=>{
 
     const [coordinates, setCoordinates] = useState({});
     const [bounds, setBounds] = useState(null);
+
+    const [isLoading, setIsLoading]= useState(false);
     
 
     useEffect(() => {
@@ -37,10 +39,12 @@ const App=()=>{
     }, [coordinates]);
 
     useEffect (() => {
+        setIsLoading(true);
         if (bounds) {
             getPlacesData(bounds.sw,bounds.ne)
             .then((data) => {
                 setPlaces(data);
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -58,6 +62,7 @@ const App=()=>{
                     <List 
                     places={places}
                     childClicked={childClicked}
+                    isLoading={isLoading}
                     />
                 </Grid>
                 <Grid item xs={12} md={8}>
