@@ -13,4 +13,7 @@ export default makeStyles(() => ({
   pointer: {
     cursor: 'pointer',
   },
+  weather: {
+    filter: 'brightness(150%)',
+  }
 }));
